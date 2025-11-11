@@ -32,7 +32,6 @@ export default function Cart() {
   const handleAddToCart = (productId: string) => {
     const product = favorites.find((p) => p.id === productId);
     if (product) {
-      // Default to first available size and quantity 1
       addToCart(product, product.availableSizes[0], 1);
     }
   };
@@ -40,7 +39,7 @@ export default function Cart() {
   return (
     <main className="min-h-[calc(100vh-65px)] bg-gradient-to-br from-[#FAF5EB] to-[#E8DCC8] px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        
         <div className="bg-white/80 backdrop-blur rounded-2xl border border-black/10 p-6 mb-6 shadow-lg">
           <h1 className="text-4xl font-bold text-gray-800 mb-2">Your Shopping Cart</h1>
           <p className="text-gray-600">
@@ -50,7 +49,7 @@ export default function Cart() {
           </p>
         </div>
 
-        {/* Tabs */}
+        
         <div className="flex gap-4 mb-6">
           <button
             onClick={() => setActiveTab("favorites")}
@@ -74,7 +73,7 @@ export default function Cart() {
           </button>
         </div>
 
-        {/* Favorites Tab */}
+        
         {activeTab === "favorites" && (
           <div>
             {favorites.length === 0 ? (
@@ -157,10 +156,10 @@ export default function Cart() {
           </div>
         )}
 
-        {/* Cart Tab */}
+        
         {activeTab === "cart" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Cart Items */}
+            
             <div className="lg:col-span-2">
               {cartItems.length === 0 ? (
                 <div className="bg-white/80 backdrop-blur rounded-xl border border-black/10 p-12 text-center">
@@ -199,7 +198,7 @@ export default function Cart() {
                         <p className="text-gray-600 text-sm mb-2">{item.price.toFixed(2)} EUR</p>
 
                         <div className="flex flex-wrap items-center gap-4">
-                          {/* Size selector */}
+                          
                           <div className="flex items-center gap-2">
                             <label className="text-sm text-gray-600">Size:</label>
                             <select
@@ -217,7 +216,7 @@ export default function Cart() {
                             </select>
                           </div>
 
-                          {/* Quantity selector */}
+                          
                           <div className="flex items-center gap-2">
                             <label className="text-sm text-gray-600">Qty:</label>
                             <div className="flex items-center border border-black/20 rounded">
@@ -251,7 +250,7 @@ export default function Cart() {
                             </div>
                           </div>
 
-                          {/* Remove button */}
+                          
                           <button
                             onClick={() => removeFromCart(item.id, item.selectedSize)}
                             className="text-red-500 hover:text-red-700 text-sm underline"
@@ -270,7 +269,7 @@ export default function Cart() {
               )}
             </div>
 
-            {/* Order Summary */}
+            
             {cartItems.length > 0 && (
               <div className="lg:col-span-1">
                 <div className="bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6 sticky top-4">

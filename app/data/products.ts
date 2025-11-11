@@ -1,6 +1,5 @@
 import type { Product } from "../context/CartContext";
 
-// Sample products for demonstration
 export const sampleProducts: Product[] = [
   {
     id: "m-shirt-1",
@@ -46,7 +45,7 @@ export const sampleProducts: Product[] = [
     id: "w-top-1",
     name: "Elegant Blouse",
     price: 39.99,
-    image: "https://images.unsplash.com/photo-1564257577810-449f4e9f062a?w=400&h=500&fit=crop",
+    image: "icon/bluzka.png",
     category: "naiste",
     availableSizes: ["XS", "S", "M", "L", "XL"],
   },

@@ -18,31 +18,26 @@ export default function Login() {
 
     setLoading(true);
 
-    // Check if user exists in localStorage
     const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
       try {
         const userData = JSON.parse(storedUser);
-        // If there's a stored user, log them in
         login({ name: userData.name, email: userData.email });
         navigate("/dashboard");
         setLoading(false);
         return;
       } catch (e) {
-        // If parsing fails, continue with normal flow
         console.log("Error parsing stored user data");
       }
     }
 
-    // If no stored user, use demo mode - extract name from email
     const name = email.split("@")[0];
     login({ name, email });
     navigate("/dashboard");
     setLoading(false);
 
     /*
-    // Uncomment this section if you want to use your backend API
     try {
       const response = await fetch("/api/login.php", {
         method: "POST",

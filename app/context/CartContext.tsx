@@ -35,7 +35,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [favorites, setFavorites] = useState<Product[]>([]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  // Load favorites and cart from localStorage on mount
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
     const storedCart = localStorage.getItem("cart");
@@ -57,12 +56,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Save favorites to localStorage
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  // Save cart to localStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);

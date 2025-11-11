@@ -19,7 +19,6 @@ export default function SignUp() {
     const password = formData.get("password") as string;
     const password2 = formData.get("password2") as string;
 
-    // Проверка совпадения паролей
     if (password !== password2) {
       setError("Passwords do not match");
       return;
@@ -28,7 +27,6 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      // Simulate API call - replace with your actual backend endpoint
       const response = await fetch("/api/signup.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,14 +36,12 @@ export default function SignUp() {
       const data = await response.json();
 
       if (data.status === "success") {
-        // Save user data and redirect to dashboard
         login({ name, email });
         navigate("/dashboard");
       } else {
         setError(data.message || "Registration failed");
       }
     } catch (err) {
-      // For demo purposes, if API fails, still allow signup with localStorage
       console.log("API not available, using local storage");
       login({ name, email });
       navigate("/dashboard");

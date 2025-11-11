@@ -135,7 +135,6 @@ function Header() {
         <div className="justify-self-end flex items-center gap-3">
           {isAuthenticated ? (
             <>
-              {/* Shopping Cart Icon */}
               <button
                 type="button"
                 onClick={() => navigate("/cart")}
@@ -162,15 +161,20 @@ function Header() {
                 )}
               </button>
 
-              {/* Profile Icon */}
               <button
                 type="button"
                 onClick={() => navigate("/dashboard")}
                 className="flex items-center gap-2 p-1.5 hover:bg-black/5 rounded-full transition-colors"
                 title={`${user?.name}'s Profile`}
               >
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                  {user?.name.charAt(0).toUpperCase()}
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-semibold overflow-hidden">
+                  {user?.avatar ? (
+                    <img src={user.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                      {user?.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                 </div>
               </button>
             </>

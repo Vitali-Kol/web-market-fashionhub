@@ -8,7 +8,6 @@ export default function Dashboard() {
   const { favorites, cartItems } = useCart();
   const navigate = useNavigate();
 
-  // Redirect to login if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -27,7 +26,7 @@ export default function Dashboard() {
   return (
     <main className="min-h-[calc(100vh-65px)] bg-gradient-to-br from-[#FAF5EB] to-[#E8DCC8] px-4 py-8">
       <div className="max-w-6xl mx-auto">
-        {/* Welcome Section */}
+        
         <div className="bg-white/80 backdrop-blur rounded-2xl border border-black/10 p-8 mb-6 shadow-lg">
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
             Welcome back, {user.name}!
@@ -35,9 +34,9 @@ export default function Dashboard() {
           <p className="text-gray-600">You are successfully signed in</p>
         </div>
 
-        {/* Dashboard Actions */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Profile Card */}
+          
           <div className="bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6 hover:shadow-lg transition-shadow">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
@@ -56,7 +55,7 @@ export default function Dashboard() {
             </button>
           </div>
 
-          {/* Shopping Cart Card */}
+          
           <div className="bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6 hover:shadow-lg transition-shadow">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center relative">
@@ -92,7 +91,7 @@ export default function Dashboard() {
             </button>
           </div>
 
-          {/* Favorites Card */}
+          
           <div className="bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6 hover:shadow-lg transition-shadow">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center relative">
@@ -124,7 +123,7 @@ export default function Dashboard() {
             </button>
           </div>
 
-          {/* Logout Card */}
+          
           <div className="bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6 hover:shadow-lg transition-shadow">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center">
@@ -156,7 +155,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Quick Actions */}
+        
         <div className="mt-8 bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-2 md:grid-cols-2 gap-4">

@@ -3,7 +3,6 @@ import { useCart } from "../../context/CartContext";
 import { sampleProducts } from "../../data/products";
 import type { Product } from "../../context/CartContext";
 
-// Your existing products
 type Item = { id: string; title: string; price: string; src: string };
 
 const items: Item[] = [
@@ -13,7 +12,6 @@ const items: Item[] = [
   { id: "4", title: "SPORTLIK JAKK", price: "62,99 EUR", src: "/icon/image-7.png" },
 ];
 
-// Get sample products for men's category
 const menProducts = sampleProducts.filter(p => p.category === "mees");
 
 function Heart({ active }: { active?: boolean }) {
@@ -38,7 +36,6 @@ function Heart({ active }: { active?: boolean }) {
     const [showSizeSelector, setShowSizeSelector] = useState(false);
     const [selectedSize, setSelectedSize] = useState("");
 
-    // Convert item to Product format for cart
     const itemAsProduct: Product = {
       id: item.id,
       name: item.title,
@@ -74,7 +71,6 @@ function Heart({ active }: { active?: boolean }) {
         <div className="relative aspect-[300/544] overflow-hidden bg-[#FAF5EB] p-2">
           <img src={item.src} alt={item.title} className="w-full h-full object-contain" />
 
-          {/* Size selector overlay */}
           {showSizeSelector && (
             <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3 p-4">
               <p className="text-white text-sm font-semibold">Select Size</p>
@@ -111,7 +107,7 @@ function Heart({ active }: { active?: boolean }) {
             </div>
           )}
 
-          {/* Heart button */}
+          
           <button
             aria-label="Add to favorites"
             onClick={handleHeartClick}
@@ -120,7 +116,6 @@ function Heart({ active }: { active?: boolean }) {
             <Heart active={isLiked} />
           </button>
 
-          {/* Add to Cart button */}
           <button
             onClick={() => setShowSizeSelector(true)}
             className="absolute left-2 bottom-4 px-3 py-1 text-xs uppercase bg-black text-white rounded hover:bg-black/80 transition"
@@ -166,7 +161,7 @@ function Heart({ active }: { active?: boolean }) {
         <div className="relative aspect-[300/544] overflow-hidden bg-[#FAF5EB] p-2">
           <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
 
-          {/* Size selector overlay */}
+
           {showSizeSelector && (
             <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3 p-4">
               <p className="text-white text-sm font-semibold">Select Size</p>
@@ -203,7 +198,6 @@ function Heart({ active }: { active?: boolean }) {
             </div>
           )}
 
-          {/* Heart button */}
           <button
             aria-label="Add to favorites"
             onClick={handleHeartClick}
@@ -212,7 +206,6 @@ function Heart({ active }: { active?: boolean }) {
             <Heart active={isLiked} />
           </button>
 
-          {/* Add to Cart button */}
           <button
             onClick={() => setShowSizeSelector(true)}
             className="absolute left-2 bottom-4 px-3 py-1 text-xs uppercase bg-black text-white rounded hover:bg-black/80 transition"
@@ -228,21 +221,20 @@ function Heart({ active }: { active?: boolean }) {
     );
   }
 
-  
+
 
 export default function Mees() {
   return (
     <main className="px-[clamp(12px,3vw,32px)] py-6 bg-[#FAF5EB]">
       <h1 className="font-serif text-[28px] tracking-[0.12em] mb-4">MEHED</h1>
 
-      {/* Your existing products */}
+
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {items.map((it) => (
           <Card key={it.id} item={it} />
         ))}
       </section>
 
-      {/* New sample products with cart functionality */}
       <h2 className="font-serif text-[24px] tracking-[0.12em] mb-4 mt-8">POPULAR ITEMS</h2>
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {menProducts.map((product) => (
