@@ -1,13 +1,19 @@
 import { useState } from "react";
+import { useCart } from "../../context/CartContext";
+import { sampleProducts } from "../../data/products";
+import type { Product } from "../../context/CartContext";
 
 type Item = { id: string; title: string; price: string; src: string };
 
 const items: Item[] = [
-  { id: "1", title: "Šerpa jope", price: "36,99 EUR", src: "/icon/image-8.png" },
-  { id: "2", title: "Lühike kapuutsiga bomber-jakk", price: "54,99 EUR", src: "/icon/image-9.png" },
-  { id: "3", title: "Teksapüksid baggy", price: "43,99 EUR", src: "/icon/image-10.png" },
-  { id: "4", title: "Ruuduline miniseelik", price: "29,99 EUR", src: "/icon/image-11.png" },
+  { id: "5", title: "Šerpa jope", price: "36,99 EUR", src: "/icon/image-8.png" },
+  { id: "6", title: "Lühike kapuutsiga bomber-jakk", price: "54,99 EUR", src: "/icon/image-9.png" },
+  { id: "7", title: "Teksapüksid baggy", price: "43,99 EUR", src: "/icon/image-10.png" },
+  { id: "8", title: "Ruuduline miniseelik", price: "29,99 EUR", src: "/icon/image-11.png" },
 ];
+
+// Get sample products for women's category
+const womenProducts = sampleProducts.filter(p => p.category === "naiste");
 
 function Heart({ active }: { active?: boolean }) {
     return (
@@ -27,22 +33,195 @@ function Heart({ active }: { active?: boolean }) {
   
 
   function Card({ item }: { item: Item }) {
-    const [wish, setWish] = useState(false);
+    const { addToFavorites, removeFromFavorites, isFavorite, addToCart } = useCart();
+    const [showSizeSelector, setShowSizeSelector] = useState(false);
+    const [selectedSize, setSelectedSize] = useState("");
+
+    // Convert item to Product format for cart
+    const itemAsProduct: Product = {
+      id: item.id,
+      name: item.title,
+      price: parseFloat(item.price.replace(",", ".").replace(" EUR", "")),
+      image: item.src,
+      category: "naiste",
+      availableSizes: ["XS", "S", "M", "L", "XL"],
+    };
+
+    const isLiked = isFavorite(item.id);
+
+    const handleHeartClick = () => {
+      if (isLiked) {
+        removeFromFavorites(item.id);
+      } else {
+        addToFavorites(itemAsProduct);
+      }
+    };
+
+    const handleAddToCart = () => {
+      if (!selectedSize) {
+        setShowSizeSelector(true);
+        return;
+      }
+      addToCart(itemAsProduct, selectedSize, 1);
+      setShowSizeSelector(false);
+      setSelectedSize("");
+      alert(`${item.title} added to cart!`);
+    };
+
     return (
       <article className="group max-w-[260px] sm:max-w-[300px] mx-auto">
         <div className="relative aspect-[300/544] overflow-hidden bg-[#FAF5EB] p-2">
           <img src={item.src} alt={item.title} className="w-full h-full object-contain" />
+
+          {/* Size selector overlay */}
+          {showSizeSelector && (
+            <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3 p-4">
+              <p className="text-white text-sm font-semibold">Select Size</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {["XS", "S", "M", "L", "XL"].map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`px-3 py-1 rounded ${
+                      selectedSize === size
+                        ? "bg-white text-black"
+                        : "bg-white/20 text-white hover:bg-white/30"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleAddToCart}
+                  disabled={!selectedSize}
+                  className="px-4 py-1 bg-white text-black rounded text-sm disabled:opacity-50"
+                >
+                  Add
+                </button>
+                <button
+                  onClick={() => setShowSizeSelector(false)}
+                  className="px-4 py-1 bg-white/20 text-white rounded text-sm hover:bg-white/30"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Heart button */}
           <button
-            aria-label="Wishlist"
-            onClick={() => setWish((v) => !v)}
+            aria-label="Add to favorites"
+            onClick={handleHeartClick}
             className="absolute right-2 bottom-4 rounded-full p-1 bg-white/80 hover:bg-white transition"
           >
-            <Heart active={wish} />
+            <Heart active={isLiked} />
+          </button>
+
+          {/* Add to Cart button */}
+          <button
+            onClick={() => setShowSizeSelector(true)}
+            className="absolute left-2 bottom-4 px-3 py-1 text-xs uppercase bg-black text-white rounded hover:bg-black/80 transition"
+          >
+            Add to Cart
           </button>
         </div>
         <div className="mt-2">
           <div className="text-[11px] uppercase tracking-wide line-clamp-2">{item.title}</div>
           <div className="mt-1 font-semibold">{item.price}</div>
+        </div>
+      </article>
+    );
+  }
+
+  function ProductCard({ product }: { product: Product }) {
+    const { addToFavorites, removeFromFavorites, isFavorite, addToCart } = useCart();
+    const [showSizeSelector, setShowSizeSelector] = useState(false);
+    const [selectedSize, setSelectedSize] = useState("");
+    const isLiked = isFavorite(product.id);
+
+    const handleHeartClick = () => {
+      if (isLiked) {
+        removeFromFavorites(product.id);
+      } else {
+        addToFavorites(product);
+      }
+    };
+
+    const handleAddToCart = () => {
+      if (!selectedSize) {
+        setShowSizeSelector(true);
+        return;
+      }
+      addToCart(product, selectedSize, 1);
+      setShowSizeSelector(false);
+      setSelectedSize("");
+      alert(`${product.name} added to cart!`);
+    };
+
+    return (
+      <article className="group max-w-[260px] sm:max-w-[300px] mx-auto">
+        <div className="relative aspect-[300/544] overflow-hidden bg-[#FAF5EB] p-2">
+          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+
+          {/* Size selector overlay */}
+          {showSizeSelector && (
+            <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3 p-4">
+              <p className="text-white text-sm font-semibold">Select Size</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {product.availableSizes.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`px-3 py-1 rounded ${
+                      selectedSize === size
+                        ? "bg-white text-black"
+                        : "bg-white/20 text-white hover:bg-white/30"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleAddToCart}
+                  disabled={!selectedSize}
+                  className="px-4 py-1 bg-white text-black rounded text-sm disabled:opacity-50"
+                >
+                  Add
+                </button>
+                <button
+                  onClick={() => setShowSizeSelector(false)}
+                  className="px-4 py-1 bg-white/20 text-white rounded text-sm hover:bg-white/30"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Heart button */}
+          <button
+            aria-label="Add to favorites"
+            onClick={handleHeartClick}
+            className="absolute right-2 bottom-4 rounded-full p-1 bg-white/80 hover:bg-white transition"
+          >
+            <Heart active={isLiked} />
+          </button>
+
+          {/* Add to Cart button */}
+          <button
+            onClick={() => setShowSizeSelector(true)}
+            className="absolute left-2 bottom-4 px-3 py-1 text-xs uppercase bg-black text-white rounded hover:bg-black/80 transition"
+          >
+            Add to Cart
+          </button>
+        </div>
+        <div className="mt-2">
+          <div className="text-[11px] uppercase tracking-wide line-clamp-2">{product.name}</div>
+          <div className="mt-1 font-semibold">{product.price.toFixed(2)} EUR</div>
         </div>
       </article>
     );
@@ -55,9 +234,18 @@ export default function Naiste() {
     <main className="px-[clamp(12px,3vw,32px)] py-6 bg-[#FAF5EB]">
       <h1 className="font-serif text-[28px] tracking-[0.12em] mb-4">NAISTE</h1>
 
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Your existing products */}
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {items.map((it) => (
           <Card key={it.id} item={it} />
+        ))}
+      </section>
+
+      {/* New sample products with cart functionality */}
+      <h2 className="font-serif text-[24px] tracking-[0.12em] mb-4 mt-8">POPULAR ITEMS</h2>
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        {womenProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </section>
 

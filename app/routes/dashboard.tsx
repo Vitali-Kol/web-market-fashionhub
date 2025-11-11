@@ -159,19 +159,7 @@ export default function Dashboard() {
         {/* Quick Actions */}
         <div className="mt-8 bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button
-              onClick={() => navigate("/mees")}
-              className="py-3 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-center"
-            >
-              Men's Collection
-            </button>
-            <button
-              onClick={() => navigate("/naiste")}
-              className="py-3 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-center"
-            >
-              Women's Collection
-            </button>
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
             <button
               onClick={() => navigate("/orders")}
               className="py-3 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-center"

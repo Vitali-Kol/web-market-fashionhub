@@ -6,6 +6,7 @@ export default [
   route("signup", "routes/signup.tsx"),
   route("dashboard", "routes/dashboard.tsx"),
   route("cart", "routes/cart.tsx"),
+  route("profile", "routes/profile.tsx"),
 
   route("mees", "routes/mees/index.tsx", [
     index("routes/mees/mees.tsx"),
