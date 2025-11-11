@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useCart } from "../../../context/CartContext";
+import { useAuth } from "../../../context/AuthContext";
 import type { Product } from "../../../context/CartContext";
 
 type Item = {
@@ -34,6 +36,8 @@ type Item = {
 
   function Card({ item }: { item: Item }) {
     const { addToFavorites, removeFromFavorites, isFavorite, addToCart } = useCart();
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [showSizeSelector, setShowSizeSelector] = useState(false);
     const [selectedSize, setSelectedSize] = useState("");
 
@@ -49,6 +53,11 @@ type Item = {
     const isLiked = isFavorite(item.id);
 
     const handleHeartClick = () => {
+      if (!isAuthenticated) {
+        alert("Please sign in to add items to favorites");
+        navigate("/login");
+        return;
+      }
       if (isLiked) {
         removeFromFavorites(item.id);
       } else {
@@ -57,6 +66,11 @@ type Item = {
     };
 
     const handleAddToCart = () => {
+      if (!isAuthenticated) {
+        alert("Please sign in to add items to cart");
+        navigate("/login");
+        return;
+      }
       if (!selectedSize) {
         setShowSizeSelector(true);
         return;
