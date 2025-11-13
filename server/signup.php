@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/db.php';
+require __DIR__.'/database-config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   json_response(['status'=>'error','message'=>'Only POST allowed'], 405);

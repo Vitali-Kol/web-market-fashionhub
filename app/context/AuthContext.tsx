@@ -21,31 +21,64 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
+    // Check session in background without blocking the UI
+    const checkSession = async () => {
       try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        localStorage.removeItem("user");
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+        const response = await fetch("/api/verify-session.php", {
+          credentials: "include",
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Session check response:", data);
+
+          if (data.authenticated && data.user) {
+            setUser({
+              name: data.user.name,
+              email: data.user.email,
+              avatar: data.user.avatar,
+            });
+          }
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          console.warn("Session check timed out after 2 seconds");
+        } else {
+          console.error("Session check error:", error);
+        }
       }
-    }
+    };
+
+    checkSession();
   }, []);
 
   const login = (userData: User) => {
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
+  const logout = async () => {
+    try {
+      await fetch("/api/logout.php", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setUser(null);
+    }
   };
 
   const updateUser = (userData: Partial<User>) => {
     if (user) {
       const updatedUser = { ...user, ...userData };
       setUser(updatedUser);
-      localStorage.setItem("user", JSON.stringify(updatedUser));
     }
   };
 

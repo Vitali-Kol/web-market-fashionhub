@@ -154,25 +154,6 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
-
-        
-        <div className="mt-8 bg-white/80 backdrop-blur rounded-xl border border-black/10 p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-            <button
-              onClick={() => navigate("/orders")}
-              className="py-3 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-center"
-            >
-              My Orders
-            </button>
-            <button
-              onClick={() => navigate("/")}
-              className="py-3 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-center"
-            >
-              Back to Home
-            </button>
-          </div>
-        </div>
       </div>
     </main>
   );

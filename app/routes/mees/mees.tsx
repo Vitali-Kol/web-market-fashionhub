@@ -8,10 +8,10 @@ import type { Product } from "../../context/CartContext";
 type Item = { id: string; title: string; price: string; src: string };
 
 const items: Item[] = [
-  { id: "1", title: "BALLOON FIT BAGGY-LÕIKEGA TEKSAPÜKSID", price: "36,99 EUR", src: "/icon/image-4.png" },
-  { id: "2", title: "BOMBER JAKK", price: "50,99 EUR", src: "/icon/image-5.png" },
-  { id: "3", title: "FLIISJAKK", price: "48,99 EUR", src: "/icon/image-6.png" },
-  { id: "4", title: "SPORTLIK JAKK", price: "62,99 EUR", src: "/icon/image-7.png" },
+  { id: "1", title: "BALLOON FIT BAGGY-LÕIKEGA TEKSAPÜKSID", price: "36.99 EUR", src: "/icon/image-4.png" },
+  { id: "2", title: "BOMBER JAKK", price: "50.99 EUR", src: "/icon/image-5.png" },
+  { id: "3", title: "FLIISJAKK", price: "48.99 EUR", src: "/icon/image-6.png" },
+  { id: "4", title: "SPORTLIK JAKK", price: "62.99 EUR", src: "/icon/image-7.png" },
 ];
 
 const menProducts = sampleProducts.filter(p => p.category === "mees");
@@ -261,19 +261,12 @@ export default function Mees() {
         ))}
       </section>
 
-      <h2 className="font-serif text-[24px] tracking-[0.12em] mb-4 mt-8">POPULAR ITEMS</h2>
+      
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {menProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </section>
-
-      <div className="mt-8">
-        <button className="inline-flex items-center gap-3 border border-black px-5 py-2 text-sm uppercase tracking-wider hover:bg-black hover:text-white transition">
-          Näita rohkem
-          <span className="inline-block translate-x-0 group-hover:translate-x-1 transition">→</span>
-        </button>
-      </div>
     </main>
   );
 }

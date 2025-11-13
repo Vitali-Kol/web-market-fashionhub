@@ -10,6 +10,7 @@ export default function Cart() {
     cartItems,
     addToCart,
     removeFromCart,
+    removeFromFavorites,
     updateCartItemQuantity,
     updateCartItemSize,
     getTotalPrice,
@@ -128,7 +129,7 @@ export default function Cart() {
                         <button
                           onClick={() => {
                             if (confirm("Remove from favorites?")) {
-                              removeFromCart(product.id, "");
+                              removeFromFavorites(product.id);
                             }
                           }}
                           className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"

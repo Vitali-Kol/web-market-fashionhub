@@ -18,37 +18,18 @@ export default function Login() {
 
     setLoading(true);
 
-    const storedUser = localStorage.getItem("user");
-
-    if (storedUser) {
-      try {
-        const userData = JSON.parse(storedUser);
-        login({ name: userData.name, email: userData.email });
-        navigate("/dashboard");
-        setLoading(false);
-        return;
-      } catch (e) {
-        console.log("Error parsing stored user data");
-      }
-    }
-
-    const name = email.split("@")[0];
-    login({ name, email });
-    navigate("/dashboard");
-    setLoading(false);
-
-    /*
     try {
       const response = await fetch("/api/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (data.status === "success" && data.user) {
-        login({ name: data.user.name, email: data.user.email });
+        login({ name: data.user.name, email: data.user.email, avatar: data.user.avatar });
         navigate("/dashboard");
       } else {
         setError(data.message || "Login failed");
@@ -58,7 +39,6 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
-    */
   };
 
   return (

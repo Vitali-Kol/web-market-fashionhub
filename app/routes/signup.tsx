@@ -30,21 +30,20 @@ export default function SignUp() {
       const response = await fetch("/api/signup.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ name, email, password }),
       });
 
       const data = await response.json();
 
-      if (data.status === "success") {
-        login({ name, email });
+      if (data.status === "success" && data.user) {
+        login({ name: data.user.name, email: data.user.email });
         navigate("/dashboard");
       } else {
         setError(data.message || "Registration failed");
       }
     } catch (err) {
-      console.log("API not available, using local storage");
-      login({ name, email });
-      navigate("/dashboard");
+      setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
